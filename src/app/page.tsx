@@ -2,7 +2,8 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <>
+    {/* <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
@@ -96,6 +97,31 @@ export default function Home() {
           Go to nextjs.org →
         </a>
       </footer>
+    </div> */}
+
+    <div className="ml-64">
+      <ul>
+        <li>
+          <a href="/campaigns-report">Campaigns Report</a>
+        </li>
+        <li>
+          <a href="/catalog-manager">Catalog Manager</a>
+        </li>
+        <li>
+          <a href="/product-feed">Product Feed</a>
+        </li>
+        <li>
+          <a href="/pixel-manager">Pixel Manager</a>
+        </li>
+        <li>
+          <a href="/pixel-analytic">Pixel Analytic</a>
+        </li>
+        <li>
+          <a href="/zotek-facebook-pixel">Zotek</a>
+        </li>
+      </ul>
     </div>
+
+    </>
   );
 }
