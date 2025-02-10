@@ -19,10 +19,11 @@ import { filterItemsByCriteria } from "@/utils/common.utils";
 import { NavItem } from "@/types";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "./ui/collapsible";
 import { Calendar, Home, Inbox, Search, Settings, CircleHelp, FolderKanban, ChartNoAxesCombined, ClipboardPlus, Newspaper, SquareChartGantt } from "lucide-react"
-
+import { usePathname } from 'next/navigation';
 
 export function AppSidebar() {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
+  const pathname = usePathname();
 
   const toggleMenu = (title: string) => {
     setOpenMenus((prev) => ({ ...prev, [title]: !prev[title] }));
@@ -131,16 +132,22 @@ export function AppSidebar() {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {items.map((item) => {
+                const isActive = pathname === item.url;
+                return(
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <a 
+                    href={item.url}
+                    className={`flex items-center space-x-2 px-3 py-2 rounded-md ${isActive ? "bg-blue-400 text-white" : "hover:bg-gray-100"}`}
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              ))}
+                )
+            })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

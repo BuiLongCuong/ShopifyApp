@@ -99,7 +99,7 @@ export default function AnalyticsDashboard() {
          
       <div className="flex flex-col items-start justify-center gap-5">
         <h1 className="text-xl font-bold">Analytics</h1>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans">{position}</Button>
