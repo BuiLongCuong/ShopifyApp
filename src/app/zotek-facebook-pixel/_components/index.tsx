@@ -218,6 +218,25 @@ export default function Dashboard() {
           <img className="rounded-lg w-[200px] h-[112px]" src="https://d3p7e4b35qbbpe.cloudfront.net/images/Test-Event-Code.webp"/>
         </div>
 
+          <div className="w-full h-[170px] mt-4 flex flex-col items-start justify-start rounded-xl border shadow-md border-gray-200">
+              <div className="w-full h-[44px] flex flex-row items-center pl-3 bg-[#feb800] rounded-tl-xl rounded-tr-xl">
+                  <WarningIcon/>
+                  <p className="pl-1 font-[650] text-[13px] leading-[17px] text-[#303030] font-sans">Important Note About Testing Your Pixel</p>
+              </div>
+              <div className="flex flex-row w-full bg-white rounded-bl-xl rounded-br-xl">
+                <div className="flex-1 flex flex-col p-4 justify-between  rounded-br-xl rounded-bl-xl">
+                  <div>
+                    <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans">Don't worry if <strong>Pixel Helper </strong> doesn't show your events - we use <strong>Conversion API </strong> Conversion API for better tracking.</p>
+                    <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans">Click the button below for the most accurate way to test your events.</p>
+                  </div>
+                  <Button variant="outline" className="w-[107.03px] h-[28px] mb-1 font-[500] text-[13px] leading-[17px] text-[#303030] font-sans shadow-md border-gray-200 ">
+                    Test pixel now
+                  </Button>
+                </div>
+                <img className="rounded-lg w-[200px] h-[112px] mr-4 my-2" src="https://d3p7e4b35qbbpe.cloudfront.net/images/Test-Event-Code.webp"/> 
+              </div>
+          </div>
+
         {
           showAds && (
             <div className="w-full h-[226.4px] flex flex-col rounded-xl border bg-white shadow-md border-gray-200 mt-4">

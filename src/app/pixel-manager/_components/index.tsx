@@ -149,7 +149,7 @@ export default function PixelManager() {
         </div>
         </div>
 
-        <div className="flex justify-center items-center font-[400] text-[15px] leading-[17px] text-[#303030] font-sans mt-7">
+        <div className="flex justify-center items-center font-[400] text-[15px] leading-[17px] text-[#303030] font-sans mt-7 mb-10">
             Learn more about&nbsp;<a className="text-[blue] underline" href="https://zotek.gitbook.io/facebook-multiple-pixel/getting-started/get-your-pixels-ready"> Pixel</a>
         </div>
       
