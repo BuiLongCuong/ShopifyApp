@@ -4,12 +4,18 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { IPixel } from "@/types/pixel";
 import { Description } from "@radix-ui/react-dialog";
 import { set } from "date-fns";
 import { Info, FileText, PlayCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function Dashboard() {
+type IDashboardProps = {
+  dataPixel: IPixel[];
+  totalItems: number;
+}
+
+export default function Dashboard({dataPixel, totalItems} : IDashboardProps) {
     const WarningIcon = () => (
         <svg viewBox="0 0 20 20" className="w-5 h-5 text-gray-200">
             <path d="M10 6.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 1 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z"></path>
@@ -109,6 +115,7 @@ export default function Dashboard() {
 
               <div className="p-4 flex flex-col items-center">
                 <img
+                  loading="lazy"
                   src="https://d3p7e4b35qbbpe.cloudfront.net/images/themeAppOnboarding.webp"
                   alt="Guide"
                   className="w-full rounded-lg"
@@ -195,14 +202,14 @@ export default function Dashboard() {
                     {item.button}
                   </Button>
                   </div>
-                  <img alt="" src={item.src} className="w-[50px] h-[50px]"/>
+                  <img loading="lazy" alt="" src={item.src} className="w-[50px] h-[50px]"/>
                 </CardContent>
               </Card>
             ))
           }
         </div>
 
-        <div className="w-full h-[144px] flex flex-row gap-5  rounded-xl border bg-white shadow-md border-gray-200 mt-4 p-4">
+        {/* <div className="w-full h-[144px] flex flex-row gap-5  rounded-xl border bg-white shadow-md border-gray-200 mt-4 p-4">
           <div className="flex flex-1 flex-col justify-between">
             <div>
               <p className="font-[650] text-[13px] leading-[17px] text-[#303030] font-sans">Important Note About Testing Your Pixel</p>
@@ -215,8 +222,8 @@ export default function Dashboard() {
               Test pixel now
             </Button>
           </div>
-          <img className="rounded-lg w-[200px] h-[112px]" src="https://d3p7e4b35qbbpe.cloudfront.net/images/Test-Event-Code.webp"/>
-        </div>
+          <img loading="lazy" className="rounded-lg w-[200px] h-[112px]" src="https://d3p7e4b35qbbpe.cloudfront.net/images/Test-Event-Code.webp"/>
+        </div> */}
 
           <div className="w-full h-[170px] mt-4 flex flex-col items-start justify-start rounded-xl border shadow-md border-gray-200">
               <div className="w-full h-[44px] flex flex-row items-center pl-3 bg-[#feb800] rounded-tl-xl rounded-tr-xl">
@@ -233,7 +240,7 @@ export default function Dashboard() {
                     Test pixel now
                   </Button>
                 </div>
-                <img className="rounded-lg w-[200px] h-[112px] mr-4 my-2" src="https://d3p7e4b35qbbpe.cloudfront.net/images/Test-Event-Code.webp"/> 
+                <img loading="lazy" className="rounded-lg w-[200px] h-[112px] mr-4 my-2" src="https://d3p7e4b35qbbpe.cloudfront.net/images/Test-Event-Code.webp"/> 
               </div>
           </div>
 
@@ -255,7 +262,7 @@ export default function Dashboard() {
                   dataPartner.map((item, index) => (
                   <Card className="w-[295.33px] h-[133px] flex flex-col p-3 hover:bg-blue-50 cursor-pointer" key={index}>
                     <div className="w-full flex flex-1 flex-row justify-start items-center">
-                      <img alt="UpPromote Affiliate Marketing" className="w-[40px] h-[40px] rounded-lg" src={item.src}/>
+                      <img loading="lazy" alt="UpPromote Affiliate Marketing" className="w-[40px] h-[40px] rounded-lg" src={item.src}/>
                       <div className="flex flex-col ml-2 gap-1">
                         <p className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans ">{item.title}</p>
                         <div className="flex flex-row w-full gap-1">

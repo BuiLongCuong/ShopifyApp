@@ -21,6 +21,7 @@ export default function ProductFeed() {
                 </div>
 
                 <img 
+                    loading="lazy"
                     src="https://d3p7e4b35qbbpe.cloudfront.net/images/campaign-beta.jpg" 
                     alt="Product Feed Illustration" 
                     className="w-[100px] h-[66.66px] object-contain"

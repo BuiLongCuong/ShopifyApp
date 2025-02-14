@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, PlusCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function PixelManager() {
   const [selectedTab, setSelectedTab] = useState("facebook");
+  const router = useRouter();
 
   const helpfulCards = [
     {
@@ -24,6 +26,10 @@ export default function PixelManager() {
       description: "Pixels in personal accounts do not have an Access Token to use the Conversion"
     }
   ];
+
+  const routerCreatePixel = () => {
+    router.push("/create-pixel");
+  }
 
   return (
     <div className="w-[950px] pt-10">
@@ -57,21 +63,21 @@ export default function PixelManager() {
 
         <TabsContent value="facebook" className="pt-3">
         <div className="flex items-center justify-between space-x-2">
-        <div className="w-[744.54px] h-[32px] relative flex items-center">
+        <div className="flex-1 h-[32px] relative flex items-center">
             <Search className="absolute left-3 text-gray-400 w-4 h-4" />
             <Input
             placeholder="Search Facebook pixel name"
             className="pl-10 flex-1 outline-none"
             />
         </div>
-        <Button className="w-[153.46px] h-[32px] flex items-center font-[500] text-[13px] leading-[17px] font-sans">
+        <Button className="w-[153.46px] h-[32px] flex items-center font-[500] text-[13px] leading-[17px] font-sans" onClick={routerCreatePixel}>
              Create Facebook Pixel
         </Button>
         </div>
 
           <div className="w-[918px] h-[374px] mt-6 border rounded-xl p-4 flex justify-center items-start">
             <div className="flex-col items-center text-center">
-            <img src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
+            <img loading="lazy" src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
             <p className="font-[650] text-[16px] leading-[17px] text-[#303030] font-sans">No records found</p>
             <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mt-2">Try changing the filters or search term</p>
             </div>
@@ -87,14 +93,14 @@ export default function PixelManager() {
             className="pl-10 flex-1 outline-none"
             />
         </div>
-        <Button className="w-[153.46px] h-[32px] flex items-center font-[500] text-[13px] leading-[17px] font-sans">
+        <Button className="w-[153.46px] h-[32px] flex items-center font-[500] text-[13px] leading-[17px] font-sans" onClick={routerCreatePixel}>
              Create Tiktok Pixel
         </Button>
         </div>
 
           <div className="w-[918px] h-[374px] mt-6 border rounded-xl p-4 flex justify-center items-start">
             <div className="flex-col items-center text-center">
-            <img src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
+            <img loading="lazy" src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
             <p className="font-[650] text-[16px] leading-[17px] text-[#303030] font-sans">No records found</p>
             <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mt-2">Try changing the filters or search term</p>
             </div>

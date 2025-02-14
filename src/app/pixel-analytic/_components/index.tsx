@@ -182,7 +182,7 @@ export default function AnalyticsDashboard() {
 
             <div className="w-full h-[374px] mt-6 rounded-xl p-4 flex justify-center items-start">
                 <div className="flex-col items-center text-center">
-                <img src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
+                <img loading="lazy" src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
                 <p className="font-[650] text-[16px] leading-[17px] text-[#303030] font-sans">No records found</p>
                 <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mt-2">Try changing the filters or search term</p>
                 </div>
