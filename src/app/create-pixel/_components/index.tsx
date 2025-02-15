@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { FormLabel } from "@/components/ui/form";
 import { useFormik } from "formik";
 import { createNewPixel } from "@/services/pixel/pixel.service";
+import { toast } from "sonner";
 
 export default function CreatePixelPage() {
     const [showTestEvent, setShowTestEvent] = useState<boolean>(false);
@@ -51,9 +52,17 @@ export default function CreatePixelPage() {
             adAccount: '7367622169381076993'
         },
         onSubmit: async (values) => {
-            console.log("Form Values:", values);
-            // await createNewPixel(values);
-            // router.refresh();
+            try {
+                await createNewPixel(values);
+                toast.success('Create pixel successfully!');
+                router.push('/pixel-manager')
+                router.refresh();
+            } catch (error: any) {
+                console.log("Error: ", error);
+                toast.error('Failed to create pixel!');
+                return Promise.reject(error);
+            }
+            
         }
     })
 
@@ -337,7 +346,9 @@ export default function CreatePixelPage() {
                         </Card>
                     </div>
                 </div>
-                <Button type="submit">Submit</Button>
+                    <div className="flex justify-end mb-6">
+                        <Button type="submit">Submit</Button>
+                    </div>
                 </form>
             </div>
         </>

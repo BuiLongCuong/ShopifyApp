@@ -1,16 +1,21 @@
-'use client';
-
-import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, PlusCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { IPixel } from "@/types/pixel";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
+import { DataTableSkeleton } from "@/components/ui/table/data-table-skeleton";
+import FBPixelPage from "./facebook-pixel-page";
+import TiktokPixelPage from "./tiktok-pixel-page";
 
-export default function PixelManager() {
-  const [selectedTab, setSelectedTab] = useState("facebook");
-  const router = useRouter();
+type IDashboardProps = {
+  dataPixel: IPixel[];
+  totalItems: number;
+}
+
+export default async function PixelManager({dataPixel, totalItems} : IDashboardProps) {
 
   const helpfulCards = [
     {
@@ -27,16 +32,12 @@ export default function PixelManager() {
     }
   ];
 
-  const routerCreatePixel = () => {
-    router.push("/create-pixel");
-  }
-
   return (
     <div className="w-[950px] pt-10">
       <h1 className="text-2xl font-semibold mb-6">Pixel Manager</h1>
 
-      <div className="w-[950px] h-[595.4px] px-4 py-4 rounded-xl bg-white shadow-md border border-gray-200">
-      <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
+      <div className="w-[950px] h-auto px-4 py-4 rounded-xl bg-white shadow-md border border-gray-200">
+      <Tabs defaultValue="facebook" className="w-full">
         <div className="flex items-center flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
         <TabsList>
             <TabsTrigger value="facebook">
@@ -59,52 +60,36 @@ export default function PixelManager() {
         </div>
 
         <div className="border-t mt-5"></div>
-        
-
-        <TabsContent value="facebook" className="pt-3">
-        <div className="flex items-center justify-between space-x-2">
-        <div className="flex-1 h-[32px] relative flex items-center">
-            <Search className="absolute left-3 text-gray-400 w-4 h-4" />
-            <Input
-            placeholder="Search Facebook pixel name"
-            className="pl-10 flex-1 outline-none"
-            />
-        </div>
-        <Button className="w-[153.46px] h-[32px] flex items-center font-[500] text-[13px] leading-[17px] font-sans" onClick={routerCreatePixel}>
-             Create Facebook Pixel
-        </Button>
-        </div>
-
-          <div className="w-[918px] h-[374px] mt-6 border rounded-xl p-4 flex justify-center items-start">
-            <div className="flex-col items-center text-center">
-            <img loading="lazy" src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
-            <p className="font-[650] text-[16px] leading-[17px] text-[#303030] font-sans">No records found</p>
-            <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mt-2">Try changing the filters or search term</p>
-            </div>
+        <TabsContent value="facebook" className="pt-1">
+        {/* <div className="flex items-center justify-between space-x-2">
+          <div className="flex-1 h-[32px] relative flex items-center">
+              <Search className="absolute left-3 text-gray-400 w-4 h-4" />
+              <Input
+              placeholder="Search Facebook pixel name"
+              className="pl-10 flex-1 outline-none"
+              />
           </div>
+          <Button className="w-[153.46px] h-[32px] flex items-center font-[500] text-[13px] leading-[17px] font-sans" onClick={routerCreatePixel}>
+              Create Facebook Pixel
+          </Button>
+        </div> */}
+          <FBPixelPage/>
         </TabsContent>
 
-        <TabsContent value="tiktok" className="pt-3">
-        <div className="flex items-center justify-between space-x-2">
-        <div className="flex-1 h-[32px] relative flex items-center">
-            <Search className="absolute left-3 text-gray-400 w-4 h-4" />
-            <Input
-            placeholder="Search Tiktok pixel name"
-            className="pl-10 flex-1 outline-none"
-            />
-        </div>
-        <Button className="w-[153.46px] h-[32px] flex items-center font-[500] text-[13px] leading-[17px] font-sans" onClick={routerCreatePixel}>
-             Create Tiktok Pixel
-        </Button>
-        </div>
-
-          <div className="w-[918px] h-[374px] mt-6 border rounded-xl p-4 flex justify-center items-start">
-            <div className="flex-col items-center text-center">
-            <img loading="lazy" src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
-            <p className="font-[650] text-[16px] leading-[17px] text-[#303030] font-sans">No records found</p>
-            <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mt-2">Try changing the filters or search term</p>
-            </div>
+        <TabsContent value="tiktok" className="pt-1">
+        {/* <div className="flex items-center justify-between space-x-2">
+          <div className="flex-1 h-[32px] relative flex items-center">
+              <Search className="absolute left-3 text-gray-400 w-4 h-4" />
+              <Input
+              placeholder="Search Tiktok pixel name"
+              className="pl-10 flex-1 outline-none"
+              />
           </div>
+          <Button className="w-[153.46px] h-[32px] flex items-center font-[500] text-[13px] leading-[17px] font-sans" onClick={routerCreatePixel}>
+              Create Tiktok Pixel
+          </Button>
+        </div> */}
+          <TiktokPixelPage/>
         </TabsContent>
       </Tabs>
       </div>

@@ -1,18 +1,18 @@
 import { IGetListResponse } from "@/types";
-import axiosClient from "../axiosClient";
+import axiosClient, { request } from "../axiosClient";
 import { IPixel } from "@/types/pixel";
 import { PIXEL } from "../constApi";
 
 export const getAllPixels = async () => {
     try {
-        const res = await (axiosClient.get(PIXEL.GET_ALL)) as IGetListResponse<IPixel>
-
+        const res = await (request('get', PIXEL.GET_ALL)) as IGetListResponse<IPixel>;
+        
         return {
             results: {
-              data: res?.data,
+              data: res?.data?.data,
               total: res.total
             }
-          };
+        };
     } catch (error: any) {
         return {
             results: {
@@ -25,7 +25,7 @@ export const getAllPixels = async () => {
 
 export const createNewPixel = async (data: Omit<IPixel, 'id'>) => {
   try {    
-    const res = await (axiosClient.post(PIXEL.CREATE, data))
+    const res = await (request('post', PIXEL.CREATE, data))
     return res;
   } catch (error: any) {
     console.log(error);
@@ -50,7 +50,7 @@ export const deletePixel = async (
   id: number
 ) => {
   try {
-    const res = await (axiosClient.delete(`${PIXEL.DELETE}/${id}`))
+    const res = await (request('delete', `${PIXEL.DELETE}/${id}`))
     return res;
   } catch (error: any) {
     console.log(error);

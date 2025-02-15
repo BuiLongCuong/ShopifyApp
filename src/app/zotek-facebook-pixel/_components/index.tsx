@@ -10,12 +10,9 @@ import { set } from "date-fns";
 import { Info, FileText, PlayCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
-type IDashboardProps = {
-  dataPixel: IPixel[];
-  totalItems: number;
-}
 
-export default function Dashboard({dataPixel, totalItems} : IDashboardProps) {
+
+export default function Dashboard() {
     const WarningIcon = () => (
         <svg viewBox="0 0 20 20" className="w-5 h-5 text-gray-200">
             <path d="M10 6.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 1 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z"></path>
