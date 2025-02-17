@@ -9,25 +9,13 @@ import { IPixel } from "@/types/pixel"
 import { Switch } from "@/components/ui/switch"
 import { useState } from "react"
 import CellAction from "./cell-action"
+import CellHandleStatus from "./cell-handle-status"
 
 export const columns: ColumnDef<IPixel>[] = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({row}) => {
-        const status = row.original.status;
-
-        return (
-            <Switch 
-                id="airplane-mode" 
-                className="h-5" 
-                checked={status}
-                // onCheckedChange={(checked) => {
-                //     setStatusPixel(checked);
-                // }}
-            />
-        )
-    }
+    cell: ({row}) => <CellHandleStatus data={row.original}/>
   },
   {
     accessorKey: "name",

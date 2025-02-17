@@ -45,7 +45,7 @@ export function DataTable<TData, TValue>({
   const router = useRouter();
 
   const routerCreatePixel = () => {
-    router.push("/create-pixel");
+    router.push("/pixel-manager/new");
   }
 
 

@@ -2,59 +2,62 @@
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
-import { SelectTargetArea } from "./select-target-area"
-import { RadioGroupDemo } from "./radio-group"
 import { Button } from "@/components/ui/button"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useRouter } from "next/navigation";
 import { FormLabel } from "@/components/ui/form";
 import { useFormik } from "formik";
-import { createNewPixel } from "@/services/pixel/pixel.service";
+import { createNewPixel, updatePixel } from "@/services/pixel/pixel.service";
 import { toast } from "sonner";
+import { IPixel } from "@/types/pixel";
+import * as Yup from 'yup';
 
-export default function CreatePixelPage() {
+type IPixelProps = {
+    initialData: IPixel | null;
+    pageTitle: string;
+}
+
+export default function PixelForm({initialData, pageTitle} : IPixelProps) { 
     const [showTestEvent, setShowTestEvent] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<string>("entire store");
     const [turnOn, setTurnOn] = useState<boolean>(false);
     const router = useRouter();
     const [statusPixel, setStatusPixel] = useState<boolean>(true);
-    
 
-    const formik = useFormik<{
-        name: string; 
-        pixelId: string; 
-        targetArea: string; 
-        lstEvents: string;
-        status: boolean;
-        platform: string;
-        mode: string;
-        shop: string;
-        isActiveCApi: boolean;
-        accessTokenFB: string;
-        adAccount: string;
-    }>({
+    const formik = useFormik({
         initialValues: {
-            name: "",
-            pixelId: "",
-            targetArea: "",
-            lstEvents: `{"ViewContent":{"isActive":true,"variant":"variantId","isHasVariant":true},"AddToCart":{"isActive":true,"variant":"variantId","isHasVariant":true},"InitiateCheckout":{"isActive":true,"variant":"variantId","isHasVariant":true},"Purchase":{"isActive":true,"variant":"variantId","isHasVariant":true},"PageView":{"isActive":true,"variant":"variantId","isHasVariant":true},"Search":{"isActive":true,"variant":"variantId","isHasVariant":true},"CollectionView":{"isActive":true,"variant":"variantId","isHasVariant":true},"CartView":{"isActive":true,"variant":"variantId","isHasVariant":true},"AddPaymentInfo":{"isActive":true,"variant":"variantId","isHasVariant":true}}`,
-            status: statusPixel,
-            platform: 'facebook',
-            mode: 'manual',
-            shop: 'my-project-test-shop-ify.myshopify.com',
-            isActiveCApi: true,
-            accessTokenFB: '',
-            adAccount: '7367622169381076993'
+            name: initialData?.name || "",
+            pixelId: initialData?.pixelId || "",
+            targetArea: initialData?.targetArea || "",
+            lstEvents:
+              initialData?.lstEvents ||
+              `{"ViewContent":{"isActive":true,"variant":"variantId","isHasVariant":true},"AddToCart":{"isActive":true,"variant":"variantId","isHasVariant":true},"InitiateCheckout":{"isActive":true,"variant":"variantId","isHasVariant":true},"Purchase":{"isActive":true,"variant":"variantId","isHasVariant":true},"PageView":{"isActive":true,"variant":"variantId","isHasVariant":true},"Search":{"isActive":true,"variant":"variantId","isHasVariant":true},"CollectionView":{"isActive":true,"variant":"variantId","isHasVariant":true},"CartView":{"isActive":true,"variant":"variantId","isHasVariant":true},"AddPaymentInfo":{"isActive":true,"variant":"variantId","isHasVariant":true}}`,
+            status: initialData?.status ?? true,
+            platform: initialData?.platform || "facebook",
+            mode: initialData?.mode || "manual",
+            shop: initialData?.shop || "my-project-test-shop-ify.myshopify.com",
+            isActiveCApi: initialData?.isActiveCApi ?? true,
+            accessTokenFB: initialData?.accessTokenFB || "",
+            adAccount: initialData?.adAccount || "7367622169381076993",
         },
+        validationSchema: Yup.object({
+            name: Yup.string().required("Tên pixel không được để trống"),
+            pixelId: Yup.string().required("Pixel ID không được để trống"),
+            shop: Yup.string().required("Shop không được để trống"),
+        }),
         onSubmit: async (values) => {
             try {
-                await createNewPixel(values);
-                toast.success('Create pixel successfully!');
+                if(initialData && initialData.id) {
+                    await updatePixel(initialData.id, values);
+                    toast.success("Pixel updated successfully!");
+                } else {
+                    await createNewPixel(values);
+                    toast.success('Create pixel successfully!');
+                }
                 router.push('/pixel-manager')
                 router.refresh();
             } catch (error: any) {
@@ -62,9 +65,38 @@ export default function CreatePixelPage() {
                 toast.error('Failed to create pixel!');
                 return Promise.reject(error);
             }
-            
         }
     })
+
+    useEffect(() => {
+        if (initialData) {
+          formik.setValues({
+            name: initialData.name,
+            pixelId: initialData.pixelId,
+            targetArea: initialData.targetArea || "",
+            lstEvents: initialData.lstEvents || formik.values.lstEvents,
+            status: initialData.status ?? true,
+            platform: initialData.platform,
+            mode: initialData.mode || "manual",
+            shop: initialData.shop,
+            isActiveCApi: initialData.isActiveCApi ?? true,
+            accessTokenFB: initialData.accessTokenFB || "",
+            adAccount: initialData.adAccount || "7367622169381076993",
+          });
+        }
+    }, [initialData]);
+
+    useEffect(() => {
+        if(pageTitle === 'Edit pixel') {
+            setTurnOn(true);
+        }
+    }, [pageTitle]);
+
+    useEffect(() => {
+        if (initialData) {
+            setStatusPixel(initialData.status ?? true);
+        }
+    }, [initialData]);
 
     const handleCloseTestEvent = () => {
         setShowTestEvent(false);
@@ -125,7 +157,7 @@ export default function CreatePixelPage() {
                     <div className="w-[28px] h-[28px] flex justify-center items-center rounded-lg cursor-pointer hover:bg-[#dbdbdb]" onClick={() => router.push("/pixel-manager")}>
                         <BackIcon/>
                     </div>
-                    <span className="font-[650] text-[20px] leading-[17px] text-[#303030] font-sans">Create pixel</span>
+                    <span className="font-[650] text-[20px] leading-[17px] text-[#303030] font-sans">{pageTitle}</span>
                 </div>
 
                 <form onSubmit={formik.handleSubmit}>
@@ -140,6 +172,7 @@ export default function CreatePixelPage() {
                                 <Switch 
                                     id="airplane-mode" 
                                     className="h-5" 
+                                    name="status"
                                     checked={statusPixel}
                                     onCheckedChange={(checked) => {
                                         setStatusPixel(checked);
@@ -159,7 +192,7 @@ export default function CreatePixelPage() {
                             </div>
                             <div className="mt-7 mb-5 flex flex-col gap-2">
                                 {/* <FormLabel requiredLabel>Title</FormLabel> */}
-                                <span className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans">Pixel Name *</span>
+                                <span className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans">Pixel Name <span className="text-red-700">*</span></span>
                                 <Input 
                                     type="text" 
                                     placeholder="Pixel Name facilitate easier pixel management" 
@@ -173,17 +206,18 @@ export default function CreatePixelPage() {
                             </div>
                             <div className="mb-5">
                                 {/* <FormLabel requiredLabel>Facebook Pixel ID</FormLabel>  */}
-                                <span className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans">Facebook Pixel ID * </span> &nbsp;
+                                <span className={`font-[500] text-[14px] leading-[17px] font-sans ${(pageTitle === 'Edit pixel') ? ("text-[#9b9b9b]") : ("text-[#303030]")}`}>Facebook Pixel ID <span className="text-red-700">*</span></span> &nbsp;
                                 <span><a href="https://youtu.be/0X8ec55G-Lk?si=CSzgXbKo7iFQayrQ" className="font-[400] text-[14px] leading-[17px] font-sans text-blue-700 underline">How to get it?</a></span>
                                 <Input 
                                     type="text" 
-                                    placeholder="Pixel Name facilitate easier pixel management" 
+                                    placeholder="Get the pixel ID from Facebook, then copy and paste it here." 
                                     className="h-[32px] font-[500] text-[12px] leading-[15px] text-[#303030] font-sans rounded-lg"
                                     id="pixelId"
                                     name="pixelId"
                                     value={formik.values.pixelId}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
+                                    disabled={(pageTitle === 'Edit pixel') ? true : false}
                                 />
                             </div>
                             <div className="flex flex-col gap-2">

@@ -11,7 +11,7 @@ function BtnCreatePixel({content}: Props) {
     const router = useRouter();
 
     const routerCreatePixel = () => {
-        router.push("/create-pixel");
+        router.push("/pixel-manager/new");
     }
     return ( 
         <>

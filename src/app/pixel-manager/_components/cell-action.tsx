@@ -50,7 +50,14 @@ export default function CellAction({data} : ICellAction) {
     return (
         <>
             <div className="flex flex-row gap-2">
-            <button className="w-[28px] h-[28px] flex justify-center items-center rounded-lg border-[#dbdbdb] border hover:bg-[#f5f4f4]"><EditIcon/></button>
+            <button 
+                className="w-[28px] h-[28px] flex justify-center items-center rounded-lg border-[#dbdbdb] border hover:bg-[#f5f4f4]"
+                onClick={() =>
+                    router.push(
+                      `/pixel-manager/${data.id}`
+                    )
+                  }
+            ><EditIcon/></button>
             <AlertDialog>
                     <AlertDialogTrigger asChild>
                         <button className="w-[28px] h-[28px] flex justify-center items-center rounded-lg border-[#dbdbdb] border hover:bg-[#f5f4f4]"><DeleteIcon/></button>
