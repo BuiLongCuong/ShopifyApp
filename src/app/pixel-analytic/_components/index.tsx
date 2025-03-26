@@ -150,15 +150,17 @@ export default function AnalyticsDashboard() {
       >
         <h4 className="text-sm font-bold">Total Event</h4>
         <div className="grid grid-cols-3 gap-4 mt-4">
-          {events.map((event, index) => (
-            <Card key={index} className="flex justify-between p-4 bg-[#f1f1f1] shadow-md border border-gray-200">
-              <CardContent className="p-0">
-                <p className="font-[500] text-[15px] text-[#303030] mb-3">{event.name}</p>
-                <p className="font-[500] text-[14px] text-[#303030]">{event.count}</p>
-              </CardContent>
-              <event.icon />
-            </Card>
-          ))}
+          {
+            events.map((event, index) => (
+              <Card key={index} className="flex justify-between p-4 bg-[#f1f1f1] shadow-md border border-gray-200">
+                <CardContent className="p-0">
+                  <p className="font-[500] text-[15px] text-[#303030] mb-3">{event.name}</p>
+                  <p className="font-[500] text-[14px] text-[#303030]">{event.count}</p>
+                </CardContent>
+                <event.icon />
+              </Card>
+            ))
+          }
         </div>
       </motion.div>
     </div>
@@ -175,14 +177,14 @@ export default function AnalyticsDashboard() {
                 className="pl-10 flex-1 outline-none"
                 />
             </div>
-            <Button variant="outline" className="w-[112px] h-[32px] shadow-sm border border-gray-200 flex items-center font-[500] text-[13px] leading-[17px] font-sans">
+            <Button variant="outline" className="w-[112px] h-[32px] gap-1 shadow-sm border border-gray-200 flex items-center font-[500] text-[13px] leading-[17px] font-sans">
                 <ExportDataIcon/>  Export Data
             </Button>
         </div>
 
             <div className="w-full h-[374px] mt-6 rounded-xl p-4 flex justify-center items-start">
                 <div className="flex-col items-center text-center">
-                <img src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
+                <img loading="lazy" src="https://d3p7e4b35qbbpe.cloudfront.net/images/no-data-two.jpg" alt="" style={{width: '200px', height: '200px'}}/>
                 <p className="font-[650] text-[16px] leading-[17px] text-[#303030] font-sans">No records found</p>
                 <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mt-2">Try changing the filters or search term</p>
                 </div>

@@ -1,4 +1,10 @@
+'use client';
+
+import { useRouter } from "next/navigation";
+
 export default function CatalogManager() {
+    const router = useRouter();
+
     return(
         <>
         <div className="w-full flex flex-col items-center justify-start bg-[#f1f1f1] py-10">
@@ -20,12 +26,16 @@ export default function CatalogManager() {
                     <strong> Shopify into your Facebook/Tiktok Catalog </strong>
                     and enables you to run dynamic ads effectively.               
                     </p>
-                    <button className="w-[136.15px] h-[28px] mt-1 shadow-md border-[1px] px-[12px] py-[6px] font-[500] text-[12px] leading-[17px] text-[#303030] font-sans bg-gray-100 rounded-lg hover:bg-gray-200">
+                    <button 
+                        className="w-[136.15px] h-[28px] mt-1 shadow-md border-[1px] px-[12px] py-[6px] font-[500] text-[12px] leading-[17px] text-[#303030] font-sans bg-gray-100 rounded-lg hover:bg-gray-200"
+                        onClick={() => router.push('/catalog-manager/catalog-dashboard')}
+                    >
                         Free unlock feature
                     </button>
                 </div>
 
                 <img 
+                    loading="lazy"
                     src="https://d3p7e4b35qbbpe.cloudfront.net/images/campaign-beta.jpg" 
                     alt="Product Feed Illustration" 
                     className="w-[100px] h-[66.66px] object-contain"

@@ -12,4 +12,13 @@ const nextConfig: NextConfig = {
   },
 };
 
+module.exports = {
+  devIndicators: {
+    autoPrerender: false,
+  },
+  experimental: {
+    https: true,
+  },
+};
+
 export default nextConfig;

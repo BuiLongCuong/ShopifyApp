@@ -1,6 +1,7 @@
 import Dashboard from "./_components";
 
-export default function ZotekFacebookPixel() {
+
+export default async function ZotekFacebookPixel() {
     return(
         <>
         <Dashboard/>

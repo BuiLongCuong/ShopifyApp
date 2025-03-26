@@ -53,7 +53,7 @@ export default function Partners() {
                             dataPartner.map((item, index) => (
                             <Card className="w-[295.33px] h-[133px] flex flex-col p-3 hover:bg-blue-50 cursor-pointer" key={index}>
                                 <div className="w-full flex flex-1 flex-row justify-start items-center">
-                                    <img alt="UpPromote Affiliate Marketing" className="w-[40px] h-[40px] rounded-lg" src={item.src}/>
+                                    <img loading="lazy" alt="UpPromote Affiliate Marketing" className="w-[40px] h-[40px] rounded-lg" src={item.src}/>
                                     <div className="flex flex-col ml-2 gap-1">
                                     <p className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans ">{item.title}</p>
                                     <div className="flex flex-row w-full gap-1">
