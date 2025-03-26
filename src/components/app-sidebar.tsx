@@ -71,6 +71,16 @@ export function AppSidebar() {
       url: "/help",
       icon: CircleHelp,
     },
+    // {
+    //   title: "Catalog Dashboard",
+    //   url: "/catalog-manager/catalog-dashboard",
+    //   icon: CircleHelp,
+    // },
+    // {
+    //   title: "Campaign Report Openned",
+    //   url: "/campaign-report-dashboard",
+    //   icon: CircleHelp,
+    // },
   ]
 
   return (

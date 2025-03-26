@@ -42,7 +42,7 @@ export default function CellAction({data} : ICellAction) {
             router.refresh();
         } catch (error: any) {
             console.error('Error:', error);
-            toast.error('Failed to delete content!');
+            toast.error('Failed to delete pixel!');
             return Promise.reject(error);
         };
     }

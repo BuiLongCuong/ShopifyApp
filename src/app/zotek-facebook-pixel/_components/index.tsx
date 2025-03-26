@@ -3,11 +3,14 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { IPixel } from "@/types/pixel";
 import { Description } from "@radix-ui/react-dialog";
 import { set } from "date-fns";
-import { Info, FileText, PlayCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Info, FileText, PlayCircle, ChevronUp, ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
@@ -92,6 +95,18 @@ export default function Dashboard() {
       setShowDialog(true);
       setShowAds(true)
     }, []);
+
+    const router = useRouter();
+    const [activeApp, setActiveApp] = useState<boolean>(true);
+    const [createPixel, setCreatePixel] = useState<boolean>(false);
+    const [createCatalog, setCreateCatalog] = useState<boolean>(false);
+    const [testPixel, setTestPixel] = useState<boolean>(true);
+
+    const handleActiveState = (state: "activeApp" | "createPixel" | "createCatalog") => {
+      setActiveApp(state === "activeApp");
+      setCreatePixel(state === "createPixel");
+      setCreateCatalog(state === "createCatalog");
+  };
     
   return (
     <div 
@@ -137,7 +152,7 @@ export default function Dashboard() {
 
       <div className="w-[950px] h-auto">
         <h1 className="text-xl font-bold mb-5">Home</h1>
-          <div className="w-full h-[148px] flex flex-col items-start justify-start rounded-xl border bg-[#f1f1f1] shadow-md border-gray-200">
+          {/* <div className="w-full h-[148px] flex flex-col items-start justify-start rounded-xl border bg-[#f1f1f1] shadow-md border-gray-200">
               <div className="w-full h-[44px] flex flex-row items-center pl-3 bg-[#feb800] rounded-tl-xl rounded-tr-xl">
                   <WarningIcon/>
                   <p className="pl-1 font-[650] text-[13px] leading-[17px] text-[#303030] font-sans">Before using our app, please make the following changes:</p>
@@ -155,32 +170,154 @@ export default function Dashboard() {
                   Enable Now
                   </Button>
               </div>
-          </div>
+          </div> */}
 
-        <div className="mt-4 bg-white p-5 shadow-md border-gray-200 rounded-xl">
+        <div className="mt-4 bg-white px-4 py-[18px] shadow-md border-gray-200 rounded-xl">
           <h2 className="font-[650] text-[15px] leading-[17px] text-[#303030] font-sans">Setup guide</h2>
           <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mt-2">
             Welcome to Zotek! Before you get started, here's a quick guide on how to use our app.
           </p>
 
-          <div className="bg-gray-100 px-3 py-2 rounded-md mt-4">
-            <h3 className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans mb-3">Add your Facebook or TikTok Pixel</h3>
-            <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans">
-              Create a Facebook or TikTok Pixel on Zotek and enable the Conversion API to bypass iOS
-              14 and Ad blockers, ensuring no missed events.{" "}
-              <a href="https://zotek.gitbook.io/facebook-multiple-pixel/getting-started/setup-facebook-pixel/setup-facebook-pixel" className="text-blue-500">
-                Learn more
-              </a>
-            </p>
-
-            <div className="mt-3 flex items-center gap-2">
-              <Button variant="default" className="w-[150.56px] h-[28px] font-[500] text-[13px] leading-[17px] text-white font-sans">Create facebook pixel</Button>
-              <Button variant="ghost" className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans">Create tiktok pixel</Button>
+          <div 
+            className={`bg-gray-100 px-3 py-2 rounded-md mt-4 ${activeApp ? "" : "bg-white hover:bg-[#f3f3f3] cursor-pointer"}`} 
+            onClick={() => handleActiveState("activeApp")}
+          >
+            <div className="flex flex-row justify-start item gap-2">
+              <h3 className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans">Activate Zotek app embedded</h3>
+              <div className="w-[68px] h-[20px] rounded-lg bg-[#ffd6d5] flex justify-center items-center font-[500] text-[13px] leading-[17px] text-red-700 font-sans">
+                Required
+              </div>
             </div>
+            <motion.div
+              initial={{ height: 0, opacity: 0}}
+              animate={{ height: activeApp ? "auto" : 0, opacity: activeApp ? 1 : 0}}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut"}}
+              className="overflow-hidden"
+            >
+              <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mb-3 mt-2">
+                To ensure smooth operation and avoid any potential issues, please make sure the following
+                changes are implemented before using our app: Go to{" "}
+                <strong>Online Store &gt; Customize &gt; App Embeds</strong> &gt; Turn on{" "}
+                <strong>Zotek Multiple Pixel</strong> and click Save (or simply click the Enable button
+                below).
+              </p> 
+              <Button variant="default" className="w-auto h-[28px] font-[500] text-[13px] leading-[17px] text-white font-sans">
+                <a href="https://quickstart-4f38784d.myshopify.com/admin/themes/current/editor?context=apps&amp;template=index&amp;activateAppId=e17ae0a7-f600-440d-80e8-705183c6ec36/pixelEmbed">Enable now</a>
+              </Button>
+            </motion.div>
           </div>
 
-          <Button variant="ghost" className="w-full flex items-center justify-start mt-1 font-[500] text-[13px] leading-[17px] text-[#303030] font-sans">Create your catalog</Button>
+          <div 
+            className={`bg-gray-100 px-3 py-2 rounded-md mt-1 ${createPixel ? "" : "bg-white hover:bg-[#f3f3f3] cursor-pointer"}`} 
+            onClick={() => handleActiveState("createPixel")}
+          >
+            <h3 className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans">Add your Facebook or Tiktok Pixel</h3>
+            <motion.div
+              initial={{ height: 0, opacity: 0}}
+              animate={{ height: createPixel ? "auto" : 0, opacity: createPixel ? 1 : 0}}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut"}}
+              className="overflow-hidden"
+            >
+              <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mt-2">
+                Create a Facebook or TikTok Pixel on Zotek and enable the Conversion API to bypass iOS
+                14 and Ad blockers, ensuring no missed events.{" "}
+                <a href="https://zotek.gitbook.io/facebook-multiple-pixel/getting-started/setup-facebook-pixel/setup-facebook-pixel" className="text-blue-500">
+                  Learn more
+                </a>
+              </p>
+
+              <div className="mt-3 flex items-center gap-2">
+                <Button 
+                  variant="default" 
+                  className="w-[150.56px] h-[28px] font-[500] text-[13px] leading-[17px] text-white font-sans"
+                  onClick={() => router.push("/pixel-manager/new")}
+                >
+                  Create facebook pixel
+                </Button>
+                <Button variant="ghost" className="w-auto h-[28px] font-[500] text-[13px] leading-[17px] text-[#303030] font-sans hover:bg-[#e4e4e4]">Create tiktok pixel</Button>
+              </div>
+            </motion.div>
+          </div>
+
+
+          <div 
+            className={`bg-gray-100 px-3 py-2 rounded-md mt-1 ${createCatalog ? "" : "bg-white hover:bg-[#f3f3f3] cursor-pointer"}`} 
+            onClick={() => handleActiveState("createCatalog")}
+          >
+            <h3 className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans">Create your catalog</h3>
+
+            <motion.div
+              initial={{ height: 0, opacity: 0}}
+              animate={{ height: createCatalog ? "auto" : 0, opacity: createCatalog ? 1 : 0}}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut"}}
+              className="overflow-hidden"
+            >
+              <p className="font-[500] text-[13px] leading-[17px] text-[#303030] font-sans mb-3 mt-2">
+                Easily create and manage Facebook catalog. Connect the catalog with Product feed to automatically update products regularly. Link with Pixel to track user interactions with the products in the catalog.{" "}
+                <a href="https://zotek.gitbook.io/facebook-multiple-pixel/getting-started/catalog-manager/create-catalog-and-connect-pixel" className="text-blue-500">
+                  Learn more
+                </a>
+              </p> 
+              <Button 
+                variant="default" 
+                className="w-auto h-[28px] font-[500] text-[13px] leading-[17px] text-white font-sans"
+                onClick={() => router.push("/catalog-manager/catalog-dashboard/new")}
+              >
+                Create catalog
+              </Button>
+            </motion.div>
+          </div>
         </div>
+
+
+        <Card className="flex flex-col w-full h-auto p-4 mb-4 mt-4">
+          <div className="flex flex-row justify-between items-center">
+              <span className="font-[650] text-[14px] leading-[17px] text-[#303030] font-sans">Accurately Testing Your Pixel</span>
+                        
+              <div 
+                  className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer hover:bg-[#dbdbdb] rounded-xl"
+                  onClick={() => setTestPixel(!testPixel)}
+              >
+                <span className="text-gray-500">
+                    {testPixel ? <ChevronUp className="w-4 h-4"/> : <ChevronDown className="w-4 h-4"/>}
+                </span>
+              </div>
+          </div>
+
+          <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: testPixel ? "auto" : 0, opacity: testPixel ? 1 : 0 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden"
+          >
+            <img src="https://d3p7e4b35qbbpe.cloudfront.net/images/pixel-helper-not-detecting.webp" className="mt-4"/>
+            <div className="flex flex-row gap-2 mt-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild className="w-auto">
+                    <Button variant="outline" className="h-[28px] px-3 gap-1 text-[13px] font-medium text-[#303030]">
+                    More actions
+                    <ChevronDown className="w-4 h-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="center" className="w-auto h-auto">
+                    <DropdownMenuItem className="cursor-pointer w-auto h-[28px] font-[500] text-[13px] leading-[17px] text-[#303030] font-sans">
+                      Test facebook pixel
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer w-auto h-[28px] font-[500] text-[13px] leading-[17px] text-[#303030] font-sans">
+                      Test titkok pixel
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <Button variant="ghost" className="h-[28px] font-[500] text-[13px] leading-[17px] text-[#303030] font-sans">Contact support</Button>
+            </div>
+          </motion.div>
+
+        </Card>
 
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-[18px]">
           {
@@ -222,7 +359,7 @@ export default function Dashboard() {
           <img loading="lazy" className="rounded-lg w-[200px] h-[112px]" src="https://d3p7e4b35qbbpe.cloudfront.net/images/Test-Event-Code.webp"/>
         </div> */}
 
-          <div className="w-full h-[170px] mt-4 flex flex-col items-start justify-start rounded-xl border shadow-md border-gray-200">
+          {/* <div className="w-full h-[170px] mt-4 flex flex-col items-start justify-start rounded-xl border shadow-md border-gray-200">
               <div className="w-full h-[44px] flex flex-row items-center pl-3 bg-[#feb800] rounded-tl-xl rounded-tr-xl">
                   <WarningIcon/>
                   <p className="pl-1 font-[650] text-[13px] leading-[17px] text-[#303030] font-sans">Important Note About Testing Your Pixel</p>
@@ -239,7 +376,10 @@ export default function Dashboard() {
                 </div>
                 <img loading="lazy" className="rounded-lg w-[200px] h-[112px] mr-4 my-2" src="https://d3p7e4b35qbbpe.cloudfront.net/images/Test-Event-Code.webp"/> 
               </div>
-          </div>
+          </div> */}
+
+
+       
 
         {
           showAds && (

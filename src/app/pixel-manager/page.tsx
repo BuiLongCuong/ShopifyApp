@@ -5,16 +5,16 @@ import { Suspense } from "react";
 import { SearchParams } from "next/dist/server/request/search-params";
 import { searchParamsCache } from '@/lib/searchparams';
 
-type pageProps = {
+type IPageProps = {
     searchParams: SearchParams;
 };
 
-export default async function Page({ searchParams }: pageProps) {
+export default async function Page({ searchParams }: IPageProps) {
+    searchParamsCache.parse(searchParams);
+
     const res = await getAllPixels();
     const dataPixel: IPixel[] = res.results.data;
     const totalItems = res.results.total;
-
-    searchParamsCache.parse(searchParams);
 
     return(
         <PixelManager dataPixel={dataPixel} totalItems={totalItems}/>

@@ -154,7 +154,7 @@ export default function PixelForm({initialData, pageTitle} : IPixelProps) {
         <>
             <div className="w-[950px] h-auto flex flex-col mt-10">
                 <div className="w-full h-auto flex flex-row justify-start items-center mb-[24px] gap-2">
-                    <div className="w-[28px] h-[28px] flex justify-center items-center rounded-lg cursor-pointer hover:bg-[#dbdbdb]" onClick={() => router.push("/pixel-manager")}>
+                    <div className="w-[28px] h-[28px] flex justify-center items-center rounded-lg cursor-pointer hover:bg-[#dbdbdb]" onClick={() => router.back()}>
                         <BackIcon/>
                     </div>
                     <span className="font-[650] text-[20px] leading-[17px] text-[#303030] font-sans">{pageTitle}</span>
@@ -182,11 +182,11 @@ export default function PixelForm({initialData, pageTitle} : IPixelProps) {
                             </div>
                             <div className="w-full flex flex-row gap-3 mt-3">
                                 <div className="flex items-center space-x-2">
-                                    <input name="pixel_input" value="manual" id="manual" type="radio" defaultChecked/>
+                                    <input name="pixel_input" value="manual" id="manual" type="radio" className="cursor-pointer" defaultChecked/>
                                     <span className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans">Manual input pixel</span>
                                 </div>
                                 <div className="flex items-center space-x-2">
-                                    <input name="pixel_input" value="auto" id="auto" type="radio"/>
+                                    <input name="pixel_input" value="auto" id="auto" type="radio" className="cursor-pointer"/>
                                     <span className="font-[500] text-[14px] leading-[17px] text-[#303030] font-sans">Auto input pixel</span>
                                 </div>   
                             </div>
@@ -267,7 +267,7 @@ export default function PixelForm({initialData, pageTitle} : IPixelProps) {
                                                     <WarningIcon/>
                                                 </span>
                                                 </TooltipTrigger>
-                                                <TooltipContent>
+                                                <TooltipContent className="w-[285px] h-auto bg-white text-black border border-[#dbdbdb]">
                                                     <p>A solution for enhancing tracking events</p>
                                                 </TooltipContent>
                                             </Tooltip>

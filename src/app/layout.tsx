@@ -3,6 +3,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { ReactNode } from "react";
+import CustomSessionProvider from "@/components/SessionProvider";
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import { Toaster } from "sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import NuqsProvider from "@/components/NuqsProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,22 +31,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+
+      {/* <CustomSessionProvider> */}
         <SidebarProvider>
           <AppSidebar />
           {/* <SidebarTrigger/> */}
           {/* <SidebarInset> */}
-         
           <main className="flex justify-center items-start w-full h-vh bg-[#f1f1f1]">
-         
             {/* <div className="flex flex-col justify-center items-center w-full"> */}
+            {/* <TooltipProvider> */}
+            <NuqsProvider>
               {children}
+            </NuqsProvider>
+            {/* </TooltipProvider> */}
             {/* </div> */}
           </main>
+          <Toaster />
           {/* </SidebarInset> */}
         </SidebarProvider>
+        {/* </CustomSessionProvider> */}
       </body>
     </html>
+    
   );
 }

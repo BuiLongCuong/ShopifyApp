@@ -9,10 +9,30 @@ const axiosClient = axios.create({
     maxContentLength: Infinity
 });
 
+axiosClient.interceptors.response.use(
+  (config) => {
+    return config?.data;
+  },
+  (error) => {
+    // if needs to navigate to login page when request exception
+    // history.replace('/login');
+    if (axios.isCancel(error)) {
+      console.log('Request canceled:', error.message);
+      // $message.error(error.message);
+    } else {
+      let errorMessage = error?.message?.includes('Network Error')
+        ? error?.message
+        : error?.response?.data?.message || 'An error occurred';
+      console.log(errorMessage);
+    }
+    return Promise.reject(error);
+  }
+);
+
 export type Response<T = any> = {
     totalCount: number;
     items: [];
-  };
+};
 
 export type MyResponse<T = any> = Promise<Response<T>>;
 

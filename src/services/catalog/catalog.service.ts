@@ -1,12 +1,16 @@
 import { IGetListResponse } from "@/types";
 import axiosClient, { request } from "../axiosClient";
-import { IPixel } from "@/types/pixel";
-import { PIXEL } from "../constApi";
+import { ICatalog } from "@/types/catalog";
+import { CATALOG } from "../constApi";
 
-export const getAllPixels = async () => {
+export const getAllCatalogs = async () => {
     try {
-        const res = await (request('get', PIXEL.GET_ALL)) as IGetListResponse<IPixel>;
-        
+        // if(!params?.page_number) params!.page_number = 1;
+        // if(!params?.limit) params!.limit = 10;
+
+        // const res = (await (request('get', `${CATALOG.GET_ALL}?page=${params.page_number - 1}&size=${params.limit}`))) as IGetListResponse<ICatalog>;
+
+        const res = (await (request('get', CATALOG.GET_ALL))) as IGetListResponse<ICatalog>;
         return {
             results: {
               data: res?.data,
@@ -24,9 +28,9 @@ export const getAllPixels = async () => {
     }
 }
 
-export const createNewPixel = async (data: Omit<IPixel, 'id'>) => {
+export const createNewCatalog = async (data: Omit<ICatalog, 'id'>) => {
   try {    
-    const res = await (request('post', PIXEL.CREATE, data))
+    const res = await (request('post', CATALOG.CREATE, data))
     return res;
   } catch (error: any) {
     console.log(error);
@@ -34,10 +38,10 @@ export const createNewPixel = async (data: Omit<IPixel, 'id'>) => {
   }
 }
 
-export const getPixelDetails = async (id: number) => {
+export const getCatalogDetails = async (id: number) => {
   try {
     // const res = await (request('get', `${PIXEL.GET_DETAILS}/${id}`)) as IPixel;
-    const res = await (axiosClient.get(`${PIXEL.GET}/${id}`));
+    const res = await (axiosClient.get(`${CATALOG.GET}/${id}`));
     const resData = res.data;
 
     // console.log(resData);
@@ -48,12 +52,12 @@ export const getPixelDetails = async (id: number) => {
   }
 }
 
-export const updatePixel = async (
+export const updateCatalog = async (
   id: number,
-  dataForm: Partial<IPixel>
+  dataForm: Partial<ICatalog>
 ) => {
   try {
-    const res = await (axiosClient.put(`${PIXEL.UPDATE}/${id}`, dataForm));
+    const res = await (axiosClient.put(`${CATALOG.UPDATE}/${id}`, dataForm));
     const resData = res.data;
     
     console.log(res.data);
@@ -65,11 +69,11 @@ export const updatePixel = async (
   }
 }
 
-export const deletePixel = async (
+export const deleteCatalog = async (
   id: number
 ) => {
   try {
-    const res = await (request('delete', `${PIXEL.DELETE}/${id}`))
+    const res = await (request('delete', `${CATALOG.DELETE}/${id}`))
     return res;
   } catch (error: any) {
     console.log(error);

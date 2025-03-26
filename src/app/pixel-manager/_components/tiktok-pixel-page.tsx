@@ -4,11 +4,11 @@ import { DataTableSkeleton } from "@/components/ui/table/data-table-skeleton";
 import { getAllPixels } from "@/services/pixel/pixel.service";
 import { IPixel } from "@/types/pixel";
 import { Suspense } from "react";
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
+import { DataTable } from "./pixel-table/data-table";
+import { columns } from "./pixel-table/columns";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import BtnCreatePixel from "./button-create-pixel";
+import BtnCreatePixel from "./pixel-table/button-create-pixel";
 
 export default async function TiktokPixelPage() {
     const res = await getAllPixels();

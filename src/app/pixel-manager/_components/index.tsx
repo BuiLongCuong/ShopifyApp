@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, PlusCircle } from "lucide-react";
 import { IPixel } from "@/types/pixel";
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
+import { DataTable } from "./pixel-table/data-table";
+import { columns } from "./pixel-table/columns";
 import { DataTableSkeleton } from "@/components/ui/table/data-table-skeleton";
 import FBPixelPage from "./facebook-pixel-page";
 import TiktokPixelPage from "./tiktok-pixel-page";
@@ -59,7 +59,7 @@ export default async function PixelManager({dataPixel, totalItems} : IDashboardP
         </TabsList>
         </div>
 
-        <div className="border-t mt-5"></div>
+        <div className="border-t mt-2"></div>
         <TabsContent value="facebook" className="pt-1">
         {/* <div className="flex items-center justify-between space-x-2">
           <div className="flex-1 h-[32px] relative flex items-center">
